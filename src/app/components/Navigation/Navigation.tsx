@@ -6,9 +6,9 @@ export default function Navigation() {
     <div>
       <nav>
         <ul>
-          <li className={styles.listItem}>
-            <Link href="/transactions">Transactions</Link>
-          </li>
+          <Link href="/transactions">
+            <li className={styles.listItem}>Transactions</li>
+          </Link>
         </ul>
       </nav>
     </div>
