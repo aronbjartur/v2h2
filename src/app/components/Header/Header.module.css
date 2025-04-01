@@ -1,0 +1,38 @@
+.buttonContainer {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: 10px;
+  outline: 2px solid white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: purple;
+}
+.buttonContainer :hover {
+  background-color: palevioletred;
+  cursor: pointer;
+}
+.buttonContainer :active {
+  background-color: pink;
+}
+.headerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* Adjust spacing between elements */
+  padding: 1rem; /* Optional: Keep the padding */
+}
+.forsida {
+  font-size: larger;
+  margin-right: 10px; /* Add margin to the right */
+  outline: 2px solid white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: purple;
+}
+.forsida:hover {
+  background-color: palevioletred;
+  cursor: pointer;
+}
+.forsida:active {
+  background-color: pink;
+}

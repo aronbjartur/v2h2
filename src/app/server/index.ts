@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 import { v2 as cloudinary } from 'cloudinary';
 import auth, { authMiddleware } from './auth';
 
-
 import {
   createTransaction,
   getTransactions,
@@ -108,7 +107,11 @@ app.post('/upload', async (c) => {
 
 // Only authenticated users can see their own accounts; admin sees all.
 app.get('/accounts', authMiddleware, async (c) => {
-  const userData = c.get('user') as { id: number; username: string; admin: boolean };
+  const userData = c.get('user') as {
+    id: number;
+    username: string;
+    admin: boolean;
+  };
   if (!userData) {
     return c.json({ error: 'User not authenticated' }, 401);
   }
@@ -116,16 +119,21 @@ app.get('/accounts', authMiddleware, async (c) => {
   if (userData.admin) {
     accounts = await getAccounts();
   } else {
-    accounts = (await getAccounts()).filter((acc) => acc.user_id === userData.id);
+    accounts = (await getAccounts()).filter(
+      (acc) => acc.user_id === userData.id
+    );
   }
   return c.json(accounts);
 });
 
-
 // Only authenticated users can see the latest transactions (latest 10);
 // admin sees all latest transactions.
 app.get('/transactions/latest', authMiddleware, async (c) => {
-  const userData = c.get('user') as { id: number; username: string; admin: boolean };
+  const userData = c.get('user') as {
+    id: number;
+    username: string;
+    admin: boolean;
+  };
   if (!userData) {
     return c.json({ error: 'User not authenticated' }, 401);
   }
@@ -133,7 +141,9 @@ app.get('/transactions/latest', authMiddleware, async (c) => {
   if (userData.admin) {
     transactions = await getTransactions();
   } else {
-    transactions = (await getTransactions()).filter((tran) => tran.user_id === userData.id);
+    transactions = (await getTransactions()).filter(
+      (tran) => tran.user_id === userData.id
+    );
   }
   // Remove the sorting since 'created' doesn't exist
   // transactions.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());

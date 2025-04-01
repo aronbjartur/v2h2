@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 // import Header from "./components/Header"; not þetta þegar header.tsx í components virkar
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
 import styles from './page.module.css';
-import Header from './components/Header';
+import Header from './components/Header/Header';
+import Navigation from './components/Navigation/Navigation';
 
 export default function Home() {
   return (
@@ -25,11 +26,12 @@ export default function Home() {
           />
         </section>
         <section className={styles.content}>
-          <h1 className={styles.centeredText}>Velkomin í bankann okkar</h1>
+          <h1 className={styles.centeredText}>Velkomin í heimasíðu bankans</h1>
           <p className={styles.description}>
-            Hér geturðu skoðað reikninga þína, flutt peninga og fleira.
+            Hér getið þið skoðað reikninga ykkar, gert yfirfærslur og fleira.
           </p>
         </section>
+        <Navigation />
       </main>
       <Footer />
     </div>
