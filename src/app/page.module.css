@@ -15,6 +15,10 @@
   gap: 64px;
   font-family: var(--font-geist-sans);
 }
+.boxid {
+  width: 100%;
+  max-width: 400px;
+}
 
 .centeredText {
   text-align: center;

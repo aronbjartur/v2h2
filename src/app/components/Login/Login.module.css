@@ -1,0 +1,60 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Center vertically */
+  padding: 20px;
+  gap: 24px; /* Space between elements */
+  width: 100%;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 400px; /* Limit form width */
+  gap: 8px; /* Space between label and input */
+}
+.stafir {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 10px; /* Space above the input */
+  margin-bottom: 5px; /* Space below the label */
+}
+.inntak {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}
+.inntak:hover {
+  transform: scale(1.03); /* Slightly increase size */
+  border-color: lightcyan; /* Optional: Change border color on hover */
+}
+.inntak:focus {
+  outline: none;
+  border-color: lightblue;
+}
+.takkinn {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Space above the button */
+}
+.takkinn:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+.takkinn:active {
+  background-color: #023c7e; /* Even darker shade on click */
+}

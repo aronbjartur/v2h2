@@ -9,7 +9,9 @@ const Header: React.FC = () => {
         <Link href="/">Forsíða</Link>
       </p>
       <section className={styles.buttonContainer}>
-        <button>Innskráning</button>
+        <p>
+          <Link href="/login">Innskráning</Link>
+        </p>
       </section>
     </header>
   );

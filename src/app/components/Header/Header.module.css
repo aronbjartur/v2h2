@@ -9,7 +9,7 @@
   background-color: purple;
 }
 .buttonContainer :hover {
-  background-color: palevioletred;
+  background-color: rgb(105, 0, 105);
   cursor: pointer;
 }
 .buttonContainer :active {
@@ -30,7 +30,7 @@
   background-color: purple;
 }
 .forsida:hover {
-  background-color: palevioletred;
+  background-color: rgb(105, 0, 105);
   cursor: pointer;
 }
 .forsida:active {
