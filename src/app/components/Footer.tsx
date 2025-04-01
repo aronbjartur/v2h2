@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from '../page.module.css';
 
 const Footer: React.FC = () => {
   return (
-    <footer style={{ backgroundColor: '#f0f0f0', padding: '1rem', textAlign: 'center' }}>
-      <p>© 2025 - Allur réttur áskilinn</p>
+    <footer style={{ color: '#f0f0f0', padding: '1rem', textAlign: 'center' }}>
+      <p className={styles.fotur}>© 2025 - Allur réttur áskilinn</p>
     </footer>
   );
 };
