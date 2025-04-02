@@ -29,6 +29,7 @@
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 12px;
+  background-color: rgb(31, 30, 30);
 }
 .inntak:hover {
   transform: scale(1.03); /* Slightly increase size */

@@ -28,7 +28,12 @@ export class TransactionsApi {
     return json as T;
   }
   async getTransactions(user: string): Promise<Transaction | null> {
-    const url = BASE_URL + `/login/transactions/${user}`;
+    const url = BASE_URL + `/transactions/${user}`;
+    const response = await this.fetchFromApi<Transaction | null>(url);
+    return response;
+  }
+  async getAllTransactions(): Promise<Transaction | null> {
+    const url = BASE_URL + `/transactions`;
     const response = await this.fetchFromApi<Transaction | null>(url);
     return response;
   }

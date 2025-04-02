@@ -2,12 +2,17 @@ import Createtransaction from '../../components/Createtransaction/Createtransact
 import Header from '../../components/Header/Header';
 import Transactions from '../../components/Transactions/Transactions';
 // https://localhost:8000
-export default function Home() {
+export default async function TransactionsByUser({
+  params,
+}: {
+  params: Promise<{ transaction: string }>;
+}) {
+  const { transaction } = await params;
   return (
     <div>
       <Header />
       <Createtransaction />
-      <Transactions />
+      <Transactions user={transaction} />
     </div>
   );
 }
