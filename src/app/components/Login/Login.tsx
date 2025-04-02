@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './Login.module.css';
 
 export default function Login() {
@@ -28,9 +29,11 @@ export default function Login() {
             placeholder="Sláðu inn lykilorð"
           />
         </div>
-        <button className={styles.takkinn} type="submit">
-          Innskrá
-        </button>
+        <Link href="/login/transactions">
+          <button className={styles.takkinn} type="submit">
+            Innskrá
+          </button>
+        </Link>
       </form>
     </div>
   );

@@ -1,6 +1,16 @@
+/* import { TransactionToCreate } from '@/app/types'; */
 import styles from './Createtransaction.module.css';
 
-export default function Createtransaction() {
+export default function Createtransaction(/* {
+  account,
+  user,
+  payment_method,
+  transaction_id,
+  transaction_type,
+  category,
+  amount,
+  description,
+}: TransactionToCreate */) {
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.title}>Create New Transaction</h2>
@@ -9,44 +19,49 @@ export default function Createtransaction() {
           <label htmlFor="paymentMethod" className={styles.label}>
             Payment Method:
           </label>
-          <input
-            type="text"
-            id="paymentMethod"
-            className={styles.input}
-            placeholder='"reiðufé", "kreditkort", "bankamillifærsla"'
-            required
-          />
+          <select id="paymentMethod" className={styles.input} required>
+            <option value="" disabled selected>
+              Veldu form greiðslu
+            </option>
+            <option value="reiðufé">Reiðufé</option>
+            <option value="kreditkort">Kreditkort</option>
+            <option value="kreditkort">Bankamillifærsla</option>
+          </select>
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="transactionType" className={styles.label}>
             Transaction Type:
           </label>
-          <input
-            type="text"
-            id="transactionType"
-            className={styles.input}
-            placeholder='"income" or "expense"'
-            required
-          />
+          <select id="transactionType" className={styles.input} required>
+            <option value="" disabled selected>
+              Veldu tegund færslu
+            </option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="category" className={styles.label}>
             Category:
           </label>
-          <input
-            type="text"
-            id="category"
-            className={styles.input}
-            placeholder='"matur", "íbúð", "samgöngur", "afþreying", "laun", "annar"'
-            required
-          />
+          <select id="category" className={styles.input} required>
+            <option value="" disabled selected>
+              Veldu tegund flokks
+            </option>
+            <option value="matur">Matur</option>
+            <option value="íbúð">Íbúð</option>
+            <option value="samgöngur">Samgöngur</option>
+            <option value="afþreying">Afþreying</option>
+            <option value="laun">Laun</option>
+            <option value="annar">Annað</option>
+          </select>
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="amount" className={styles.label}>
             Amount:
           </label>
           <input
-            type="text"
+            type="number"
             id="amount"
             className={styles.input}
             placeholder="Hvert er magnið?"
