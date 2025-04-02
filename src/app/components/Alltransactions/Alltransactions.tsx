@@ -1,10 +1,10 @@
 'use client';
 import { JSX, useEffect, useState } from 'react';
-import styles from './Transactions.module.css';
+import styles from './Alltransactions.module.css';
 import { Transaction, UiState } from '@/app/types';
 import { TransactionsApi } from '@/app/api';
 /* import { Transaction } from '@/app/types'; */
-export default function Transactions({ user }: { user: string }): JSX.Element {
+export default function Alltransactions(): JSX.Element {
   const [uiState, setUiState] = useState<UiState>('initial');
   const [transactions, setTransactions] = useState<Array<Transaction>>([]);
 
@@ -22,7 +22,7 @@ export default function Transactions({ user }: { user: string }): JSX.Element {
     async function fetchTransactions() {
       setUiState('loading');
       const api = new TransactionsApi(); // Create an instance of TransactionsApi
-      const categoriesResponse = await api.getTransactions(user);
+      const categoriesResponse = await api.getAllTransactions();
 
       /* if (!categoriesResponse) {
         setUiState('error');
@@ -41,7 +41,7 @@ export default function Transactions({ user }: { user: string }): JSX.Element {
       }
     }
     fetchTransactions(); // Call the function to fetch transactions
-  }, [user]);
+  }, []);
   switch (uiState) {
     case 'loading':
       return <p className={styles.loading}>Sæki transactions...</p>;
@@ -52,10 +52,9 @@ export default function Transactions({ user }: { user: string }): JSX.Element {
     case 'data':
       return (
         <div className={styles.transactionsContainer}>
-          <h1 className={styles.title}>Transactions hjá notanda {user}</h1>
+          <h1 className={styles.title}>All transactions</h1>
           <p className={styles.description}>
-            Hér eiga að koma öll Transactions hjá notanda {user} eftir
-            Innskráningu, en gerum Innskráningu seinast.
+            Hér eiga að koma Transactions hjá öllum notendum.
           </p>
           <table className={styles.table}>
             <thead>

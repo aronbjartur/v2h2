@@ -59,3 +59,27 @@
   font-weight: bold; /* Optional: Make column headers bold */
   text-align: center; /* Center-align text */
 }
+.pagination {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pageButton {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pageButton:hover {
+  background-color: #e0e0e0;
+}
+
+.activePage {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
