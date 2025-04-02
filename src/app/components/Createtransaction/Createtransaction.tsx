@@ -1,6 +1,16 @@
+/* import { TransactionToCreate } from '@/app/types'; */
 import styles from './Createtransaction.module.css';
 
-export default function Createtransaction() {
+export default function Createtransaction(/* {
+  account,
+  user,
+  payment_method,
+  transaction_id,
+  transaction_type,
+  category,
+  amount,
+  description,
+}: TransactionToCreate */) {
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.title}>Create New Transaction</h2>
