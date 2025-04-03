@@ -11,7 +11,7 @@ export default async function TransactionsByUser({
   return (
     <div>
       <Header />
-      <Createtransaction />
+      <Createtransaction user={transaction} />
       <Transactions user={transaction} />
     </div>
   );
