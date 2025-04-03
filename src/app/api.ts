@@ -37,4 +37,33 @@ export class TransactionsApi {
     const response = await this.fetchFromApi<Transaction | null>(url);
     return response;
   }
+
+  // New function to post a new transaction
+  async createTransaction(
+    newTransaction: Omit<Transaction, 'id' | 'slug'>,
+    user: string
+  ): Promise<Transaction | null> {
+    const url = BASE_URL + `/transactions/${user}`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTransaction),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to create transaction:', response.statusText);
+        console.log('Response:', response);
+        return null;
+      }
+
+      const createdTransaction = await response.json();
+      return createdTransaction as Transaction;
+    } catch (error) {
+      console.error('Error creating transaction:', error);
+      return null;
+    }
+  }
 }

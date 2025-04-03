@@ -83,3 +83,10 @@
   color: white;
   font-weight: bold;
 }
+.loading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: #007bff;
+  margin-top: 20px;
+}

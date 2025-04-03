@@ -18,9 +18,9 @@ export type Paginated<T> = {
 };
 
 export type TransactionToCreate = {
-  account: string;
-  user: string;
-  payment_method: string;
+  account_id: number;
+  user_id: number;
+  payment_method_id: number;
   transaction_id: string;
   transaction_type: string;
   category: string;

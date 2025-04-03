@@ -24,14 +24,9 @@ export default function Transactions({ user }: { user: string }): JSX.Element {
       const api = new TransactionsApi(); // Create an instance of TransactionsApi
       const categoriesResponse = await api.getTransactions(user);
 
-      /* if (!categoriesResponse) {
+      if (!categoriesResponse) {
         setUiState('error');
       } else {
-        setUiState('data');
-        setTransactions(categoriesResponse);
-      } */
-      console.log('categoriesResponse', categoriesResponse);
-      if (categoriesResponse) {
         setUiState('data');
         setTransactions(
           Array.isArray(categoriesResponse)
