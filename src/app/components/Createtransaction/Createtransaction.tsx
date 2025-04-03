@@ -16,15 +16,15 @@ export default function Createtransaction({
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
+  const [account, setAccount] = useState(''); // New state for account selection
   const [message, setMessage] = useState(''); // For success/error messages
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent the default form submission behavior
     setUiState('loading'); // Set UI state to loading
-    console.log('Userinn er ', user);
 
     const newTransaction = {
-      account_id: 16, // Replace with the actual account ID (e.g., fetched from the user or a dropdown)
+      account_id: parseInt(account), // Use the selected account value
       user_id:
         user === 'admin'
           ? 17
@@ -53,6 +53,7 @@ export default function Createtransaction({
         console.log('Transaction created:', createdTransaction);
 
         // Clear the form after successful submission
+        setAccount('');
         setPaymentMethod('');
         setTransactionType('');
         setCategory('');
@@ -102,6 +103,25 @@ export default function Createtransaction({
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Create New Transaction</h2>
           <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+              <label htmlFor="account" className={styles.label}>
+                Account:
+              </label>
+              <select
+                id="account"
+                className={styles.input}
+                value={account}
+                onChange={(e) => setAccount(e.target.value)}
+                required
+              >
+                <option value="" disabled>
+                  Veldu reikning
+                </option>
+                <option value="16">Aðalreikningur</option>
+                <option value="17">Jónas reikningur</option>
+                <option value="18">Katríns reikningur</option>
+              </select>
+            </div>
             <div className={styles.formGroup}>
               <label htmlFor="paymentMethod" className={styles.label}>
                 Payment Method:
