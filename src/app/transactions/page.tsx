@@ -64,7 +64,7 @@ export default function TransactionsPage() {
       <div className={styles.page}>
         <Header />
         <main className={styles.main}>
-          <p>Hleður...</p>
+          <p className={styles.loadingScreen}>Hleður...</p>
         </main>
         <Footer />
       </div>
@@ -89,7 +89,7 @@ export default function TransactionsPage() {
           </p>
         )}
         {uiState === 'empty' && (
-          <p className={styles.loadingScreen}>Engar færslur fundust.</p>
+          <p className={styles.empty}>Engar færslur fundust.</p>
         )}
         {uiState === 'data' && <TransactionTable transactions={transactions} />}
       </main>

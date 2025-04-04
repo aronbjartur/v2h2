@@ -59,3 +59,10 @@
 .takkinn:active {
   background-color: #023c7e; /* Even darker shade on click */
 }
+.errorMessage {
+  color: red;
+  font-size: bigger;
+  margin-top: 16px;
+  text-align: center;
+  list-style-type: none;
+}

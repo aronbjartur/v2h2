@@ -44,7 +44,6 @@ export default function Login() {
     <div className={styles.loginContainer}>
       <h2>Innskráning</h2>
       <form onSubmit={handleSubmit}>
-        {error && <p className={styles.errorMessage}>{error}</p>}
         <div className={styles.formGroup}>
           <label className={styles.stafir} htmlFor="username">
             Notendanafn:
@@ -82,6 +81,7 @@ export default function Login() {
         <button className={styles.takkinn} type="submit" disabled={loading}>
           {loading ? 'Skrái inn...' : 'Innskrá'}
         </button>
+        {error && <p className={styles.errorMessage}>{error}</p>}
       </form>
       <p className={styles.registerLink}>
         Ertu ekki með aðgang? <Link href="/register">Nýskráning</Link>
