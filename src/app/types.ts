@@ -1,4 +1,5 @@
 export type UiState = 'initial' | 'loading' | 'error' | 'data' | 'empty';
+
 export type Transaction = {
   id: number;
   account_id: number;
@@ -6,9 +7,10 @@ export type Transaction = {
   payment_method_id: number;
   transaction_type: string;
   category: string;
-  amount: number;
-  description: string;
+  amount: number; 
+  description: string | null; 
   slug: string;
+  created?: string | Date;
 };
 export type Paginated<T> = {
   data: T[];
@@ -19,9 +21,7 @@ export type Paginated<T> = {
 
 export type TransactionToCreate = {
   account_id: number;
-  user_id: number;
   payment_method_id: number;
-  transaction_id: string;
   transaction_type: string;
   category: string;
   amount: number;
@@ -31,9 +31,10 @@ export type User = {
   id: number;
   username: string;
   email: string;
-  password: string;
   admin: boolean;
-  created: string;
+  created: string | Date;
+  slug?: string | null; 
+  profilePictureUrl?: string | null; 
 };
 export type PaymentMethod = {
   id: number;
@@ -49,15 +50,15 @@ export type Budget = {
   id: number;
   user_id: number;
   category: string;
-  monthly_limit: number;
-  created: string;
+  monthly_limit: number; 
+  created: string | Date;
   slug: string;
 };
 export type Account = {
   id: number;
   user_id: number;
   account_name: string;
-  balance: number;
-  created: string;
+  balance: number; 
+  created: string | Date;
   slug: string;
 };
