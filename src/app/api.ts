@@ -1,7 +1,7 @@
 import { Transaction, User, UserImage, Account } from './types';
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+  process.env.NEXT_PUBLIC_API_BASE_URL || 'https://hv1nytt.onrender.com';
 
 export class ApiError extends Error {
   status: number;
