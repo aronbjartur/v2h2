@@ -153,7 +153,7 @@ export default function Createtransaction({
   };
 
   if (uiState === 'loading') {
-    return <p className={styles.loading}>Stofna færslu...</p>;
+    return <p className={styles.loadingScreen}>Stofna færslu...</p>;
   }
 
   return (
@@ -161,20 +161,22 @@ export default function Createtransaction({
       <h2 className={styles.title}>Stofna nýja færslu</h2>
       {accountsError && <p className={styles.errorMessage}>{accountsError}</p>}
       {message && !errorDetails && (
-        <p
-          className={
-            uiState === 'error' ? styles.errorMessage : styles.successMessage
-          }
-        >
-          {message}
-        </p>
+        <div className={styles.messageContainer}>
+          <p
+            className={
+              uiState === 'error' ? styles.errorMessage : styles.successMessage
+            }
+          >
+            {message}
+          </p>
+        </div>
       )}
       {errorDetails && (
-        <div className={styles.errorDetails}>
+        <div className={styles.errorDetailsContainer}>
           <p className={styles.errorMessage}>
             {message.includes('Sjá nánar') ? message : 'Gögn eru ógild:'}
           </p>
-          <ul>
+          <ul className={styles.errorDetails}>
             {Object.entries(errorDetails.fieldErrors || {}).map(
               ([field, errors]) => (
                 <li key={field}>

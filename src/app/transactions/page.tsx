@@ -80,11 +80,17 @@ export default function TransactionsPage() {
           {user?.admin ? 'Allar færslur (Stjórnandi):' : 'Þínar færslur:'}
         </h1>
 
-        {uiState === 'loading' && <p>Sæki færslur...</p>}
-        {uiState === 'error' && (
-          <p>Villa við að sækja færslur. Reyndu aftur síðar.</p>
+        {uiState === 'loading' && (
+          <p className={styles.loadingScreen}>Sæki færslur...</p>
         )}
-        {uiState === 'empty' && <p>Engar færslur fundust.</p>}
+        {uiState === 'error' && (
+          <p className={styles.loadingScreen}>
+            Villa við að sækja færslur. Reyndu aftur síðar.
+          </p>
+        )}
+        {uiState === 'empty' && (
+          <p className={styles.loadingScreen}>Engar færslur fundust.</p>
+        )}
         {uiState === 'data' && <TransactionTable transactions={transactions} />}
       </main>
       <Footer />
