@@ -320,7 +320,7 @@ export default function Createtransaction({
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={uiState === 'loading' || accountsLoading}
+            disabled={accountsLoading}
           >
             {uiState === 'loading' ? 'Sendi...' : 'Stofna færslu'}
           </button>
