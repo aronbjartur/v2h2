@@ -10,9 +10,6 @@ export default function Home() {
     <div className={styles.page}>
       <Header />
       <main className={styles.main}>
-        <section className={styles.hero}>
-          <h2 className={styles.centeredText}>Heimasíða bankans</h2>
-        </section>
         <section className={styles.logoContainer}>
           <Image
             className={styles.logo}
@@ -23,6 +20,10 @@ export default function Home() {
             priority
           />
         </section>
+        <section className={styles.hero}>
+          <h2 className={styles.centeredText}>Heimasíða bankans</h2>
+        </section>
+
         <section className={styles.content}>
           <h1 className={styles.centeredText}>Velkomin í heimasíðu bankans</h1>
           <p className={styles.description}>

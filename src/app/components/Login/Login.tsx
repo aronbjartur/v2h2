@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import { useAuth } from '@/app/context/AuthContext';
-import { ApiClient, ApiError } from '@/app/api'; 
+import { ApiClient, ApiError } from '@/app/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './Login.module.css';
@@ -25,15 +25,14 @@ export default function Login() {
     try {
       const result = await apiClient.login({ username, password });
       await login(result.token, result.user);
-      router.push('/transactions'); 
-    } catch (err: any) {
+      router.push('/transactions');
+    } catch (err) {
       console.error('Login error:', err);
       if (err instanceof ApiError) {
-          setError(err.message || 'Innskráning mistókst.');
+        setError(err.message || 'Innskráning mistókst.');
       } else if (err instanceof Error) {
-          setError(err.message);
-      }
-      else {
+        setError(err.message);
+      } else {
         setError('Innskráning mistókst. Athugaðu notendanafn og lykilorð.');
       }
     } finally {

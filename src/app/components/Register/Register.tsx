@@ -1,125 +1,116 @@
 'use client';
 
-import { useState, FormEvent } from 'react'; 
-import { ApiClient, ApiError } from '@/app/api'; 
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import React, { useState } from 'react';
 import styles from './Register.module.css';
+import Link from 'next/link';
 
-export default function RegisterComponent() {
+const Register: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
+
+    // Basic validation
+    if (!username || !email || !password || !confirmPassword) {
+      setErrorMessage('Vinsamlegast fylltu út alla reiti.');
+      return;
+    }
 
     if (password !== confirmPassword) {
-      setError('Lykilorð stemma ekki.');
-      return;
-    }
-    if (password.length < 8) {
-      setError('Lykilorð verður að vera að minnsta kosti 8 stafir.');
+      setErrorMessage('Lykilorð stemma ekki.');
       return;
     }
 
-    setLoading(true);
-    const apiClient = new ApiClient();
-
-    try {
-      await apiClient.register({ username, email, password });
-      setSuccess('Nýskráning tókst! Sendi þig á innskráningarsíðu...');
-      setTimeout(() => {
-        router.push('/login');
-      }, 2500); 
-    } catch (err: any) {
-      console.error('Registration error:', err);
-      if (err instanceof ApiError) {
-          setError(err.message || 'Nýskráning mistókst.');
-      } else if (err instanceof Error) {
-          setError(err.message);
-      } else {
-        setError('Nýskráning mistókst. Vinsamlegast reyndu aftur síðar.');
-      }
-    } finally {
-      setLoading(false);
-    }
+    // Simulate successful registration
+    setErrorMessage('');
+    setSuccessMessage('Skráning tókst! Þú getur nú skráð þig inn.');
   };
 
   return (
     <div className={styles.registerContainer}>
-      <h2>Nýskráning</h2>
-      <form onSubmit={handleSubmit}>
-        {error && <p className={styles.errorMessage}>{error}</p>}
-        {success && <p className={styles.successMessage}>{success}</p>}
+      <form className={styles.registerForm} onSubmit={handleSubmit}>
+        <h2 className={styles.title}>Nýskráning</h2>
 
-        <div className={styles.formGroup}>
-          <label className={styles.stafir} htmlFor="username">Notendanafn:</label>
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+        {successMessage && (
+          <p className={styles.successMessage}>{successMessage}</p>
+        )}
+
+        <div className={styles.inputGroup}>
+          <label htmlFor="username" className={styles.label}>
+            Notandanafn
+          </label>
           <input
-            className={styles.inntak}
             type="text"
             id="username"
+            className={styles.input}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="Sláðu inn notandanafn"
             required
-            disabled={loading || !!success} 
-            autoComplete="username"
           />
-        </div>
-         <div className={styles.formGroup}>
-           <label className={styles.stafir} htmlFor="email">Tölvupóstfang:</label>
-           <input
-             className={styles.inntak}
-             type="email"
-             id="email"
-             value={email}
-             onChange={(e) => setEmail(e.target.value)}
-             required
-             disabled={loading || !!success}
-             autoComplete="email"
-           />
-         </div>
-        <div className={styles.formGroup}>
-          <label className={styles.stafir} htmlFor="password">Lykilorð:</label>
-          <input
-            className={styles.inntak}
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            disabled={loading || !!success}
-            autoComplete="new-password"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label className={styles.stafir} htmlFor="confirmPassword">Staðfesta lykilorð:</label>
-          <input
-             className={styles.inntak}
-             type="password"
-             id="confirmPassword"
-             value={confirmPassword}
-             onChange={(e) => setConfirmPassword(e.target.value)}
-             required
-             disabled={loading || !!success}
-             autoComplete="new-password"
-           />
         </div>
 
-        <button className={styles.takkinn} type="submit" disabled={loading || !!success}>
-          {loading ? 'Skrái...' : 'Nýskrá'}
+        <div className={styles.inputGroup}>
+          <label htmlFor="email" className={styles.label}>
+            Netfang
+          </label>
+          <input
+            type="email"
+            id="email"
+            className={styles.input}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Sláðu inn netfang"
+            required
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label htmlFor="password" className={styles.label}>
+            Lykilorð
+          </label>
+          <input
+            type="password"
+            id="password"
+            className={styles.input}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Sláðu inn lykilorð"
+            required
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label htmlFor="confirmPassword" className={styles.label}>
+            Staðfesta lykilorð
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            className={styles.input}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Sláðu inn lykilorð aftur"
+            required
+          />
+        </div>
+
+        <button type="submit" className={styles.button}>
+          Skrá mig
         </button>
+
+        <Link href="/login" className={styles.link}>
+          Hefur þú nú þegar aðgang? Skráðu þig inn
+        </Link>
       </form>
-       <p className={styles.loginLink}>
-         Ertu nú þegar með aðgang? <Link href="/login">Innskráning</Link>
-       </p>
     </div>
   );
-}
+};
+
+export default Register;

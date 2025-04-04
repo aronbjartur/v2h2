@@ -38,9 +38,11 @@ const Header: React.FC = () => {
         </p>
 
         <nav className={styles.navigation}>
-           {user && (
-             <Link href="/transactions" className={styles.navLink}>Færslur</Link>
-           )}
+          {user && (
+            <Link href="/transactions" className={styles.navLink}>
+              Færslur
+            </Link>
+          )}
         </nav>
 
         <section className={styles.userArea}>
@@ -52,52 +54,61 @@ const Header: React.FC = () => {
                 aria-haspopup="true"
                 aria-expanded={showDropdown}
               >
-                 <Image
-                    key={profilePicUrl}
-                    src={profilePicUrl}
-                    alt="Prófílmynd"
-                    width={30}
-                    height={30}
-                    className={styles.avatar}
-                    priority={false}
-                    onError={(e) => { (e.target as HTMLImageElement).src = '/default-avatar.png'; }}
-                 />
-                 <span className={styles.username}>{user.username}</span>
-                 <span className={styles.dropdownArrow}>{showDropdown ? '▲' : '▼'}</span>
+                <Image
+                  key={profilePicUrl}
+                  src={profilePicUrl}
+                  alt="Prófílmynd"
+                  width={30}
+                  height={30}
+                  className={styles.avatar}
+                  priority={false}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/default-avatar.png';
+                  }}
+                />
+                <span className={styles.username}>{user.username}</span>
+                <span className={styles.dropdownArrow}>
+                  {showDropdown ? '▲' : '▼'}
+                </span>
               </button>
 
               {showDropdown && (
                 <div className={styles.dropdownMenu} role="menu">
-                   <button
-                      role="menuitem"
-                      onClick={() => { setShowUploadModal(true); setShowDropdown(false); }}
-                      className={styles.dropdownItem}
-                   >
-                     Skipta um mynd
-                   </button>
-                   <button
-                      role="menuitem"
-                      onClick={handleLogout}
-                      className={styles.dropdownItem}
-                   >
-                     Útskrá
-                   </button>
+                  <button
+                    role="menuitem"
+                    onClick={() => {
+                      setShowUploadModal(true);
+                      setShowDropdown(false);
+                    }}
+                    className={styles.dropdownItem}
+                  >
+                    Skipta um mynd
+                  </button>
+                  <button
+                    role="menuitem"
+                    onClick={handleLogout}
+                    className={styles.dropdownItem}
+                  >
+                    Útskrá
+                  </button>
                 </div>
               )}
             </div>
           ) : (
             <div className={styles.authLinks}>
-              <Link href="/login" className={styles.authLink}>Innskrá</Link>
-              <Link href="/register" className={styles.authLink}>Nýskrá</Link>
+              <Link href="/login" className={styles.authLink}>
+                Innskrá
+              </Link>
+              <Link href="/register" className={styles.authLink}>
+                Nýskrá
+              </Link>
             </div>
           )}
         </section>
       </header>
 
       {showUploadModal && user && (
-         <ProfilePictureUpload
-             onClose={() => setShowUploadModal(false)}
-         />
+        <ProfilePictureUpload onClose={() => setShowUploadModal(false)} />
       )}
     </>
   );

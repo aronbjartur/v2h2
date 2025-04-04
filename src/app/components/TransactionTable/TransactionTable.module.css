@@ -1,0 +1,54 @@
+.tableContainer {
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Remove gaps between table cells */
+  margin-top: 16px;
+}
+
+.tableHeader {
+  background-color: cadetblue;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ccc;
+  color: white; /* Ensure text is readable on the background */
+}
+
+.tableRow {
+  background-color: white; /* White background for odd rows */
+}
+
+.tableCell {
+  padding: 8px;
+  border: 1px solid #ccc;
+  text-align: left;
+  color: rgb(70, 160, 160);
+}
+
+.tableCell:nth-child(1) {
+  font-weight: bold; /* Highlight the first column (e.g., IDs) */
+}
+
+.emptyMessage {
+  font-size: 16px;
+  color: gray;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loadingMessage {
+  font-size: 16px;
+  color: gray;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.errorMessage {
+  font-size: 16px;
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
