@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import styles from './Register.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ApiClient } from '@/app/api'; 
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -11,24 +13,45 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter(); 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => { 
     e.preventDefault();
+    setErrorMessage('');
+    setSuccessMessage('');
 
-    // Basic validation
     if (!username || !email || !password || !confirmPassword) {
       setErrorMessage('Vinsamlegast fylltu út alla reiti.');
       return;
     }
-
     if (password !== confirmPassword) {
       setErrorMessage('Lykilorð stemma ekki.');
       return;
     }
+     if (password.length < 8) {
+       setErrorMessage('Lykilorð verður að vera að minnsta kosti 8 stafir.');
+       return;
+     }
 
-    // Simulate successful registration
-    setErrorMessage('');
-    setSuccessMessage('Skráning tókst! Þú getur nú skráð þig inn.');
+    setLoading(true); 
+    const apiClient = new ApiClient();
+
+    try {
+        await apiClient.register({ username, email, password });
+
+        setSuccessMessage('Skráning tókst! Þú getur nú skráð þig inn.');
+        setTimeout(() => {
+          router.push('/login');
+        }, 2500);
+
+    } catch (error: any) {
+        console.error('Registration API error:', error); 
+        setErrorMessage(error?.message || 'Nýskráning mistókst. Vinsamlegast reyndu aftur.');
+        setSuccessMessage(''); 
+    } finally {
+        setLoading(false); 
+    }
   };
 
   return (
@@ -53,6 +76,7 @@ const Register: React.FC = () => {
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Sláðu inn notandanafn"
             required
+            disabled={loading || !!successMessage} 
           />
         </div>
 
@@ -68,6 +92,7 @@ const Register: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Sláðu inn netfang"
             required
+            disabled={loading || !!successMessage}
           />
         </div>
 
@@ -81,8 +106,9 @@ const Register: React.FC = () => {
             className={styles.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Sláðu inn lykilorð"
+            placeholder="Sláðu inn lykilorð (minst 8 stafir)" 
             required
+            disabled={loading || !!successMessage}
           />
         </div>
 
@@ -98,11 +124,12 @@ const Register: React.FC = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Sláðu inn lykilorð aftur"
             required
+            disabled={loading || !!successMessage}
           />
         </div>
 
-        <button type="submit" className={styles.button}>
-          Skrá mig
+        <button type="submit" className={styles.button} disabled={loading || !!successMessage}>
+          {loading ? 'Skrái...' : 'Skrá mig'}
         </button>
 
         <Link href="/login" className={styles.link}>
