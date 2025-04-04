@@ -4,7 +4,7 @@ https://hv2-nytt.vercel.app/
 
 ## útskýring á repo
 
-þegar síðan var tilbúinn hjá okkur þá reyndum við báðir að setja á vercel á mismunandi hætti svo að við værum fljótari að ná að setja upp síðuna. Aron vann í kóðanum hér og Aranaldur vann í sínu eigin repo-i ( https://github.com/Add1Padd1/hv2Nytt ). repo hjá Arnaldi endaði á því að virka og er síðan frá því githubi. kóðin er sá sami og þið getið skoðað munin og samanborið.
+þegar síðan var tilbúinn hjá okkur þá reyndum við báðir að setja á vercel á mismunandi hætti svo að við værum fljótari að ná að setja upp síðuna. Aron vann í kóðanum hér og Aranaldur vann í sínu eigin repo-i ( https://github.com/Add1Padd1/hv2Nytt ). repo hjá Arnaldi endaði á því að virka og er vefsíðan úr því githubi. kóðin er sá sami og þið getið skoðað munin og samanborið.
 
 ## Uppsetning verkefnisins og upplýsingar
 
