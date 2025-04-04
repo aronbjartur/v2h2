@@ -1,4 +1,4 @@
-import { Transaction, User, UserImage, Account } from './types';
+import { Transaction, User, Account } from './types';
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || 'https://hv1nytt.onrender.com';
@@ -245,10 +245,10 @@ export class ApiClient {
     }>(url, { method: 'POST', body: formData }, true);
   }
 
-  async getMyImages(): Promise<UserImage[]> {
+  async getMyImages(): Promise<any[]> { 
     const url = `${BASE_URL}/auth/images`;
     try {
-      const images = await this.fetchCore<UserImage[]>(url);
+      const images = await this.fetchCore<any[]>(url); 
       return images ?? [];
     } catch (error: any) {
       if (
