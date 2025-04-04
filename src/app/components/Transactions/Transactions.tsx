@@ -1,92 +1,103 @@
 'use client';
+
 import { JSX, useEffect, useState } from 'react';
 import styles from './Transactions.module.css';
 import { Transaction, UiState } from '@/app/types';
 import { TransactionsApi } from '@/app/api';
-/* import { Transaction } from '@/app/types'; */
-export default function Transactions({ user }: { user: string }): JSX.Element {
-  const [uiState, setUiState] = useState<UiState>('initial');
-  const [transactions, setTransactions] = useState<Array<Transaction>>([]);
 
-  const columns: Array<string> = [
-    'Account',
-    'User',
-    'Payment_method',
-    'Transaction_ID',
-    'Transaction_type',
+
+interface TransactionsProps {
+  user: string; 
+}
+
+export default function Transactions({ user }: TransactionsProps): JSX.Element {
+  const [uiState, setUiState] = useState<UiState>('initial');
+  const [transactions, setTransactions] = useState<Transaction[]>([]); 
+
+
+  const columns: string[] = [
+    'Account ID', 
+    'User ID',
+    'Payment Method ID',
+    'Transaction ID',
+    'Type',
     'Category',
     'Amount',
     'Description',
   ];
+
   useEffect(() => {
     async function fetchTransactions() {
-      setUiState('loading');
-      const api = new TransactionsApi(); // Create an instance of TransactionsApi
-      const categoriesResponse = await api.getTransactions(user);
+      if (!user) return; 
 
-      if (!categoriesResponse) {
-        setUiState('error');
-      } else {
-        setUiState('data');
-        setTransactions(
-          Array.isArray(categoriesResponse)
-            ? categoriesResponse
-            : [categoriesResponse]
-        );
+      setUiState('loading');
+      const api = new TransactionsApi(); 
+      try {
+        const response = await api.getTransactions(user); 
+
+        if (response && Array.isArray(response)) {
+            setTransactions(response);
+            setUiState(response.length > 0 ? 'data' : 'empty');
+        } else if (response && !Array.isArray(response)) {
+             setTransactions([response]);
+             setUiState('data');
+        }
+        else {
+           setTransactions([]);
+           setUiState('empty');
+        }
+      } catch (error) {
+          console.error("Error fetching transactions:", error);
+          setUiState('error');
+          setTransactions([]); 
       }
     }
-    fetchTransactions(); // Call the function to fetch transactions
-  }, [user]);
+
+    fetchTransactions();
+  }, [user]); 
+
   switch (uiState) {
     case 'loading':
-      return <p className={styles.loading}>Sæki transactions...</p>;
+      return <p className={styles.loading}>Sæki færslur...</p>;
     case 'error':
-      return <p>Villa við að sækja transactions...</p>;
+      return <p className={styles.error}>Villa kom upp við að sækja færslur.</p>; 
     case 'empty':
-      return <p>Engar gögn fundust</p>;
+      return <p className={styles.empty}>Engar færslur fundust fyrir notanda {user}.</p>;
     case 'data':
       return (
         <div className={styles.transactionsContainer}>
-          <h1 className={styles.title}>Transactions hjá notanda {user}</h1>
-          <p className={styles.description}>
-            Hér eiga að koma öll Transactions hjá notanda {user} eftir
-            Innskráningu, en gerum Innskráningu seinast.
-          </p>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                {columns.map((column, index) => (
-                  <th key={index} className={styles.tableHeader}>
-                    {column}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction, index) => (
-                <tr key={index} className={styles.tableRow}>
-                  <td className={styles.tableCell}>{transaction.account_id}</td>
-                  <td className={styles.tableCell}>{transaction.user_id}</td>
-                  <td className={styles.tableCell}>
-                    {transaction.payment_method_id}
-                  </td>
-                  <td className={styles.tableCell}>{transaction.id}</td>
-                  <td className={styles.tableCell}>
-                    {transaction.transaction_type}
-                  </td>
-                  <td className={styles.tableCell}>{transaction.category}</td>
-                  <td className={styles.tableCell}>{transaction.amount}</td>
-                  <td className={styles.tableCell}>
-                    {transaction.description}
-                  </td>
+          <h2 className={styles.title}>Færslur fyrir notanda: {user}</h2>
+          <div className={styles.tableWrapper}> 
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  {columns.map((column) => (
+                    <th key={column} className={styles.tableHeader}>
+                      {column}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {transactions.map((transaction) => (
+                  <tr key={transaction.id} className={styles.tableRow}>
+                    <td className={styles.tableCell}>{transaction.account_id}</td>
+                    <td className={styles.tableCell}>{transaction.user_id}</td>
+                    <td className={styles.tableCell}>{transaction.payment_method_id}</td>
+                    <td className={styles.tableCell}>{transaction.id}</td>
+                    <td className={styles.tableCell}>{transaction.transaction_type}</td>
+                    <td className={styles.tableCell}>{transaction.category}</td>
+                    <td className={styles.tableCell}>{transaction.amount} kr</td>
+                    <td className={styles.tableCell}>{transaction.description || '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       );
     case 'initial':
     default:
-      return <p>Engin transactions</p>;
+      return <p>Augnablik...</p>;
   }
 }

@@ -1,14 +1,15 @@
 'use client';
-import { JSX, useEffect, useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import styles from './Alltransactions.module.css';
 import { Transaction, UiState } from '@/app/types';
 import { TransactionsApi } from '@/app/api';
-/* import { Transaction } from '@/app/types'; */
-export default function Alltransactions(): JSX.Element {
-  const [uiState, setUiState] = useState<UiState>('initial');
-  const [transactions, setTransactions] = useState<Array<Transaction>>([]);
 
-  const columns: Array<string> = [
+export default function Alltransactions() {
+  const [uiState, setUiState] = useState<UiState>('initial');
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const columns: string[] = [
     'Account',
     'User',
     'Payment_method',
@@ -19,78 +20,74 @@ export default function Alltransactions(): JSX.Element {
     'Description',
   ];
   useEffect(() => {
-    async function fetchTransactions() {
+    const fetchAllTransactions = async () => {
       setUiState('loading');
-      const api = new TransactionsApi(); // Create an instance of TransactionsApi
-      const categoriesResponse = await api.getAllTransactions();
+      const api = new TransactionsApi(); 
+      try {
+        const response = await api.getAllTransactions(); 
 
-      /* if (!categoriesResponse) {
+        if (response && Array.isArray(response)) {
+          setTransactions(response);
+          setUiState(response.length > 0 ? 'data' : 'empty');
+        } else if (response && !Array.isArray(response)) {
+            setTransactions([response] as Transaction[]); 
+            setUiState('data');
+        } else {
+          setTransactions([]);
+          setUiState('empty'); 
+        }
+      } catch (error) {
+        console.error("Error fetching all transactions:", error);
         setUiState('error');
-      } else {
-        setUiState('data');
-        setTransactions(categoriesResponse);
-      } */
-      console.log('categoriesResponse', categoriesResponse);
-      if (categoriesResponse) {
-        setUiState('data');
-        setTransactions(
-          Array.isArray(categoriesResponse)
-            ? categoriesResponse
-            : [categoriesResponse]
-        );
+        setTransactions([]);
       }
-    }
-    fetchTransactions(); // Call the function to fetch transactions
-  }, []);
+    };
+
+    fetchAllTransactions();
+  }, []); 
+
   switch (uiState) {
     case 'loading':
-      return <p className={styles.loading}>Sæki transactions...</p>;
+      return <p className={styles.loading}>Sæki færslur...</p>;
     case 'error':
-      return <p>Villa við að sækja transactions...</p>;
+      return <p className={styles.error}>Villa við að sækja færslur.</p>;
     case 'empty':
-      return <p>Engar gögn fundust</p>;
+      return <p className={styles.empty}>Engar færslur fundust.</p>;
     case 'data':
       return (
         <div className={styles.transactionsContainer}>
-          <h1 className={styles.title}>All transactions</h1>
-          <p className={styles.description}>
-            Hér eiga að koma Transactions hjá öllum notendum.
-          </p>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                {columns.map((column, index) => (
-                  <th key={index} className={styles.tableHeader}>
-                    {column}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction, index) => (
-                <tr key={index} className={styles.tableRow}>
-                  <td className={styles.tableCell}>{transaction.account_id}</td>
-                  <td className={styles.tableCell}>{transaction.user_id}</td>
-                  <td className={styles.tableCell}>
-                    {transaction.payment_method_id}
-                  </td>
-                  <td className={styles.tableCell}>{transaction.id}</td>
-                  <td className={styles.tableCell}>
-                    {transaction.transaction_type}
-                  </td>
-                  <td className={styles.tableCell}>{transaction.category}</td>
-                  <td className={styles.tableCell}>{transaction.amount}</td>
-                  <td className={styles.tableCell}>
-                    {transaction.description}
-                  </td>
+          <h2 className={styles.title}>Allar Færslur</h2>
+          <div className={styles.tableWrapper}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  {columns.map((column) => (
+                    <th key={column} className={styles.tableHeader}>
+                      {column}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {transactions.map((transaction) => (
+                  <tr key={transaction.id} className={styles.tableRow}>
+                    <td className={styles.tableCell}>{transaction.account_id}</td>
+                    <td className={styles.tableCell}>{transaction.user_id}</td>
+                    <td className={styles.tableCell}>{transaction.payment_method_id}</td>
+                    <td className={styles.tableCell}>{transaction.id}</td>
+                    <td className={styles.tableCell}>{transaction.transaction_type}</td>
+                    <td className={styles.tableCell}>{transaction.category}</td>
+                    <td className={styles.tableCell}>{transaction.amount} kr</td>
+                    <td className={styles.tableCell}>{transaction.description || '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       );
     case 'initial':
     default:
-      return <p>Engin transactions</p>;
+      return <p>Hleður gögnum...</p>;
   }
 }

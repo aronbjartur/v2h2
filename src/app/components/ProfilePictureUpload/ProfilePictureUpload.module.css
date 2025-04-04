@@ -1,0 +1,46 @@
+/* src/app/components/TransactionTable/TransactionTable.module.css */
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto; /* Allows scrolling on smaller screens if table is wide */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse; /* Removes space between cell borders */
+    min-width: 600px; /* Example minimum width */
+  }
+  
+  .tableHeader {
+    background-color: #f4f4f4; /* Light grey background for headers */
+    color: #333;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+  }
+  
+  .tableRow {
+    border-bottom: 1px solid #eee; /* Light line between rows */
+  }
+  
+  .tableRow:nth-of-type(even) {
+    background-color: #f9f9f9; /* Slightly different background for even rows (zebra striping) */
+  }
+  
+  .tableRow:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+  }
+  
+  .tableCell {
+    padding: 10px 15px;
+    color: #555;
+    white-space: nowrap; /* Prevent text wrapping in cells, adjust if needed */
+  }
+  
+  /* Example specific styling if needed */
+  /* .tableCell:last-child {
+    text-align: right;
+  } */
